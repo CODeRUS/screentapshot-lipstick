@@ -10,7 +10,7 @@
 class ViewHelper : public QObject
 {
     Q_OBJECT
-    Q_CLASSINFO("D-Bus Interface", "harbour.screentapshot")
+    Q_CLASSINFO("D-Bus Interface", "screentapshot.lipstick")
     Q_PROPERTY(int lastXPos READ lastXPos WRITE setLastXPos NOTIFY lastXPosChanged)
     Q_PROPERTY(int lastYPos READ lastYPos WRITE setLastYPos NOTIFY lastYPosChanged)
     Q_PROPERTY(bool screenshotAnimation READ screenshotAnimation WRITE setScreenshotAnimation NOTIFY screenshotAnimationChanged)

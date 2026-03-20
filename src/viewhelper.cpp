@@ -53,13 +53,13 @@ static void setWaylandOpaqueRegion(QPlatformNativeInterface *wliface, QWindow *w
 ViewHelper::ViewHelper(QObject *parent) :
     QObject(parent)
 {
-    lastXPosConf = new MGConfItem("/apps/harbour-screentapshot/lastXPos", this);
-    lastYPosConf = new MGConfItem("/apps/harbour-screentapshot/lastYPos", this);
-    screenshotAnimationConf = new MGConfItem("/apps/harbour-screentapshot/screenshotAnimation", this);
+    lastXPosConf = new MGConfItem("/apps/screentapshot-lipstick/lastXPos", this);
+    lastYPosConf = new MGConfItem("/apps/screentapshot-lipstick/lastYPos", this);
+    screenshotAnimationConf = new MGConfItem("/apps/screentapshot-lipstick/screenshotAnimation", this);
     QObject::connect(screenshotAnimationConf, SIGNAL(valueChanged()), this, SIGNAL(screenshotAnimationChanged()));
-    screenshotDelayConf = new MGConfItem("/apps/harbour-screentapshot/screenshotDelay", this);
+    screenshotDelayConf = new MGConfItem("/apps/screentapshot-lipstick/screenshotDelay", this);
     QObject::connect(screenshotDelayConf, SIGNAL(valueChanged()), this, SIGNAL(screenshotDelayChanged()));
-    useSubfolderConf = new MGConfItem("/apps/harbour-screentapshot/useSubfolder", this);
+    useSubfolderConf = new MGConfItem("/apps/screentapshot-lipstick/useSubfolder", this);
     QObject::connect(useSubfolderConf, SIGNAL(valueChanged()), this, SIGNAL(useSubfolderChanged()));
     orientationLockConf = new MGConfItem("/lipstick/orientationLock", this);
     QObject::connect(orientationLockConf, SIGNAL(valueChanged()), this, SIGNAL(orientationLockChanged()));
@@ -108,15 +108,15 @@ bool ViewHelper::eventFilter(QObject *object, QEvent *event)
 void ViewHelper::closeOverlay()
 {
     if (overlayView) {
-        QDBusConnection::sessionBus().unregisterObject("/harbour/screentapshot/overlay");
-        QDBusConnection::sessionBus().unregisterService("harbour.screentapshot.overlay");
+        QDBusConnection::sessionBus().unregisterObject("/screentapshot/lipstick/overlay");
+        QDBusConnection::sessionBus().unregisterService("screentapshot.lipstick.overlay");
         overlayView->removeEventFilter(this);
         overlayView->close();
         delete overlayView;
         overlayView = NULL;
     }
     else {
-        QDBusInterface iface("harbour.screentapshot.overlay", "/harbour/screentapshot/overlay", "harbour.screentapshot");
+        QDBusInterface iface("screentapshot.lipstick.overlay", "/screentapshot/lipstick/overlay", "screentapshot.lipstick");
         iface.call(QDBus::NoBlock, "exit");
     }
 }
@@ -124,7 +124,7 @@ void ViewHelper::closeOverlay()
 void ViewHelper::openStore()
 {
     QDBusInterface iface("com.jolla.jollastore", "/StoreClient", "com.jolla.jollastore");
-    iface.call(QDBus::NoBlock, "showApp", "harbour-screentapshot");
+    iface.call(QDBus::NoBlock, "showApp", "screentapshot-lipstick");
 }
 
 void ViewHelper::setDefaultRegion()
@@ -136,12 +136,12 @@ void ViewHelper::setDefaultRegion()
 
 void ViewHelper::checkActiveSettings()
 {
-    bool newSettings = QDBusConnection::sessionBus().registerService("harbour.screentapshot.settings");
+    bool newSettings = QDBusConnection::sessionBus().registerService("screentapshot.lipstick.settings");
     if (newSettings) {
         showSettings();
     }
     else {
-        QDBusInterface iface("harbour.screentapshot.settings", "/harbour/screentapshot/settings", "harbour.screentapshot");
+        QDBusInterface iface("screentapshot.lipstick.settings", "/screentapshot/lipstick/settings", "screentapshot.lipstick");
         iface.call(QDBus::NoBlock, "show");
         qGuiApp->exit(0);
         return;
@@ -150,7 +150,7 @@ void ViewHelper::checkActiveSettings()
 
 void ViewHelper::checkActiveOverlay()
 {
-    bool inactive = QDBusConnection::sessionBus().registerService("harbour.screentapshot.overlay");
+    bool inactive = QDBusConnection::sessionBus().registerService("screentapshot.lipstick.overlay");
     if (inactive) {
         showOverlay();
         QDBusConnection::systemBus().connect(
@@ -188,9 +188,9 @@ void ViewHelper::exit()
 
 void ViewHelper::showOverlay()
 {
-    QDBusConnection::sessionBus().registerObject("/harbour/screentapshot/overlay", this, QDBusConnection::ExportScriptableSlots);
+    QDBusConnection::sessionBus().registerObject("/screentapshot/lipstick/overlay", this, QDBusConnection::ExportScriptableSlots);
 
-    qmlRegisterType<Screenshot>("harbour.screentapshot2.screenshot", 1, 0, "Screenshot");
+    qmlRegisterType<Screenshot>("screentapshot.lipstick.screenshot", 1, 0, "Screenshot");
 
     qGuiApp->setApplicationName("ScreenTapShot");
     qGuiApp->setApplicationDisplayName("ScreenTapShot");
@@ -218,7 +218,7 @@ void ViewHelper::showOverlay()
 
 void ViewHelper::showSettings()
 {
-    QDBusConnection::sessionBus().registerObject("/harbour/screentapshot/settings", this, QDBusConnection::ExportScriptableSlots);
+    QDBusConnection::sessionBus().registerObject("/screentapshot/lipstick/settings", this, QDBusConnection::ExportScriptableSlots);
 
     qGuiApp->setApplicationName("ScreenTapShot Settings");
     qGuiApp->setApplicationDisplayName("ScreenTapShot Settings");
@@ -301,7 +301,7 @@ QString ViewHelper::orientationLock() const
 
 void ViewHelper::onPackageKitPackage(quint32 status, const QString &pkgId, const QString &)
 {
-    if (status == 13 && pkgId.startsWith(QLatin1String("harbour-screentapshot2;"))) {
+    if (status == 13 && pkgId.startsWith(QLatin1String("screentapshot-lipstick;"))) {
         Q_EMIT applicationRemoval();
     }
 }
@@ -317,6 +317,6 @@ void ViewHelper::onSettingsClosing(QQuickCloseEvent *)
     settingsView->destroy();
     settingsView->deleteLater();
 
-    QDBusConnection::sessionBus().unregisterObject("/harbour/screentapshot/settings");
-    QDBusConnection::sessionBus().unregisterService("harbour.screentapshot.settings");
+    QDBusConnection::sessionBus().unregisterObject("/screentapshot/lipstick/settings");
+    QDBusConnection::sessionBus().unregisterService("screentapshot.lipstick.settings");
 }

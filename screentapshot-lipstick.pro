@@ -1,13 +1,15 @@
 THEMENAME = sailfish-default
 
-TARGET = harbour-screentapshot2
+TARGET = screentapshot-lipstick
 
 QT += dbus gui-private
-CONFIG += sailfishapp
+CONFIG += sailfishapp wayland-scanner link_pkgconfig
 PKGCONFIG += \
     mlite5 \
     wayland-client \
 # PKGCONFIG end
+
+WAYLANDCLIENTSOURCES += protocol/lipstick-recorder.xml
 
 DEFINES += APP_VERSION=\\\"$$VERSION\\\"
 
@@ -26,8 +28,9 @@ HEADERS += \
     src/screenshot.h
 
 OTHER_FILES += \
-    rpm/harbour-screentapshot2.spec \
-    harbour-screentapshot2.desktop \
+    protocol/lipstick-recorder.xml \
+    rpm/screentapshot-lipstick.spec \
+    screentapshot-lipstick.desktop \
     qml/overlay.qml \
     qml/settings.qml \
     qml/CoverPage.qml \
@@ -35,7 +38,7 @@ OTHER_FILES += \
     qml/AboutPage.qml \
     translations/*.ts
 
-privileges.files = privileges/harbour-screentapshot2
+privileges.files = privileges/screentapshot-lipstick
 privileges.path = /usr/share/mapplauncherd/privileges.d
 INSTALLS += privileges
 
@@ -44,14 +47,15 @@ INSTALLS += privileges
 CONFIG += sailfishapp_i18n
 
 TRANSLATIONS += \
-    translations/harbour-screentapshot2-es.ts \
-    translations/harbour-screentapshot2-fi.ts \
-    translations/harbour-screentapshot2-pl.ts \
-    translations/harbour-screentapshot2-pt_BR.ts \
-    translations/harbour-screentapshot2-pt.ts \
-    translations/harbour-screentapshot2-ru.ts \
-    translations/harbour-screentapshot2-sv.ts \
-    translations/harbour-screentapshot2-zh_CN.ts
+    translations/screentapshot-lipstick.ts \
+    translations/screentapshot-lipstick-es.ts \
+    translations/screentapshot-lipstick-fi.ts \
+    translations/screentapshot-lipstick-pl.ts \
+    translations/screentapshot-lipstick-pt_BR.ts \
+    translations/screentapshot-lipstick-pt.ts \
+    translations/screentapshot-lipstick-ru.ts \
+    translations/screentapshot-lipstick-sv.ts \
+    translations/screentapshot-lipstick-zh_CN.ts
 
 appicon.profiles = \
     86x86 \

@@ -1,0 +1,2 @@
+# Tells invoker to run screentapshot-lipstick as nemo:privileged
+/usr/bin/screentapshot-lipstick,

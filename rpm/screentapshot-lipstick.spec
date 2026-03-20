@@ -1,4 +1,4 @@
-Name:       harbour-screentapshot2
+Name:       screentapshot-lipstick
 
 %{!?qtc_qmake5:%define qtc_qmake5 %qmake5}
 %{!?qtc_make:%define qtc_make make}
@@ -8,13 +8,15 @@ Version:    0.3.2
 Release:    1
 Group:      Qt/Qt
 License:    WTFPL
-URL:        https://github.com/CODeRUS/harbour-screentapshot
+URL:        https://github.com/CODeRUS/screentapshot-lipstick
 Source0:    %{name}-%{version}.tar.bz2
 BuildRequires:  pkgconfig(sailfishapp)
 BuildRequires:  pkgconfig(Qt5Core)
 BuildRequires:  pkgconfig(Qt5Qml)
 BuildRequires:  pkgconfig(Qt5Quick)
 BuildRequires:  pkgconfig(wayland-client)
+BuildRequires:  qt5-qtplatformsupport-devel
+BuildRequires:  qt5-qtwayland-wayland_egl-devel
 BuildRequires:  desktop-file-utils
 BuildRequires:  sailfish-svg2png
 

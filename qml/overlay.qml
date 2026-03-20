@@ -2,7 +2,7 @@ import QtQuick 2.1
 import Sailfish.Silica 1.0
 import QtSensors 5.0
 import QtGraphicalEffects 1.0
-import harbour.screentapshot2.screenshot 1.0
+import screentapshot.lipstick.screenshot 1.0
 
 Item {
     id: root
@@ -51,6 +51,9 @@ Item {
     Screenshot {
         id: screenshot
         useSubfolder: viewHelper.useSubfolder
+        onCaptureFailed: {
+            console.warn("Screenshot:", message)
+        }
         onCaptured: {
             shotPreview.width = root.width
             shotPreview.height = root.height
@@ -263,7 +266,7 @@ Item {
                     Image {
                         id: appIcon
                         anchors.centerIn: parent
-                        source: "image://theme//harbour-screentapshot2"
+                        source: "image://theme//screentapshot-lipstick"
                     }
 
                     Label {
@@ -355,7 +358,7 @@ Item {
                 enabled: removalOverlay.enabled
                 onClicked: {
 //                    viewHelper.openStore()
-                    Qt.openUrlExternally("https://openrepos.net/content/coderus/screentapshot2")
+                    Qt.openUrlExternally("https://openrepos.net/content/coderus/screentapshot-lipstick")
                     Qt.quit()
                 }
             }

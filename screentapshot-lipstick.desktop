@@ -2,9 +2,9 @@
 Type=Application
 X-Nemo-Application-Type=silica-qt5
 X-Nemo-Single-Instance=no
-Icon=harbour-screentapshot2
-Exec=harbour-screentapshot2
+Icon=screentapshot-lipstick
+Exec=screentapshot-lipstick
 Name=ScreenTapShot
 Name[fi_FI]=Kuvakaappausnappi
 X-MeeGo-Logical-Id=ScreenTapShot
-X-MeeGo-Translation-Catalog=/usr/share/harbour-screentapshot2/translations/harbour-screentapshot2
+X-MeeGo-Translation-Catalog=/usr/share/screentapshot-lipstick/translations/screentapshot-lipstick
