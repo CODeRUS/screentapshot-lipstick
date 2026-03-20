@@ -8,3 +8,6 @@ Name=ScreenTapShot
 Name[fi_FI]=Kuvakaappausnappi
 X-MeeGo-Logical-Id=ScreenTapShot
 X-MeeGo-Translation-Catalog=/usr/share/screentapshot-lipstick/translations/screentapshot-lipstick
+
+[X-Sailjail]
+Sandboxing=Disabled

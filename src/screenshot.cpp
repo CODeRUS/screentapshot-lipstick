@@ -42,12 +42,11 @@ static const int kPoolBufferCount = 3;
 
 struct CaptureBuffer
 {
-    static CaptureBuffer *create(wl_shm *shm, int width, int height, int stride, uint32_t format)
+    // Lipstick advertises RGBA8888 in setup and fills via glReadPixels(GL_RGBA). Qt's compositor often
+    // rejects wl_shm buffers created with WL_SHM_FORMAT_RGBA8888 ("invalid format 0x34324152"); screencast
+    // always registers buffers as ARGB8888 while using QImage::Format_RGBA8888 for the same memory.
+    static CaptureBuffer *create(wl_shm *shm, int width, int height, int stride, uint32_t /*setupFormat*/)
     {
-        const QImage::Format qfmt = shmFormatToQImage(format);
-        if (qfmt == QImage::Format_Invalid)
-            return nullptr;
-
         const int size = stride * height;
         if (size <= 0)
             return nullptr;
@@ -79,10 +78,10 @@ struct CaptureBuffer
         buf->width = width;
         buf->height = height;
         buf->stride = stride;
-        buf->wlFormat = format;
+        buf->wlFormat = WL_SHM_FORMAT_RGBA8888;
 
         wl_shm_pool *pool = wl_shm_create_pool(shm, fd, size);
-        buf->buffer = wl_shm_pool_create_buffer(pool, 0, width, height, stride, format);
+        buf->buffer = wl_shm_pool_create_buffer(pool, 0, width, height, stride, WL_SHM_FORMAT_ARGB8888);
         wl_buffer_set_user_data(buf->buffer, buf);
         wl_shm_pool_destroy(pool);
         close(fd);

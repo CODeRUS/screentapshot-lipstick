@@ -2,6 +2,12 @@ THEMENAME = sailfish-default
 
 TARGET = screentapshot-lipstick
 
+# booster-silica-qt5 loads the app via dlopen(); a plain ET_EXEC binary fails with
+# "cannot dynamically load executable" unless built as PIE (ET_DYN).
+QMAKE_CFLAGS += -fPIE
+QMAKE_CXXFLAGS += -fPIE
+QMAKE_LFLAGS += -pie
+
 QT += dbus gui-private
 CONFIG += sailfishapp wayland-scanner link_pkgconfig
 PKGCONFIG += \
