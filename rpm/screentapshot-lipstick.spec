@@ -4,7 +4,7 @@ Name:       screentapshot-lipstick
 %{!?qtc_make:%define qtc_make make}
 
 Summary:    Screenshot by tapping on button
-Version:    0.3.2
+Version:    1.0.0
 Release:    1
 Group:      Qt/Qt
 License:    WTFPL
