@@ -11,6 +11,8 @@ PKGCONFIG += \
 
 WAYLANDCLIENTSOURCES += protocol/lipstick-recorder.xml
 
+LIBS += -lsailfishapp
+
 DEFINES += APP_VERSION=\\\"$$VERSION\\\"
 
 images.files = images
