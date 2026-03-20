@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Application
-X-Nemo-Application-Type=silica-qt5
+X-Nemo-Application-Type=generic
 X-Nemo-Single-Instance=no
 Icon=screentapshot-lipstick
 Exec=screentapshot-lipstick
